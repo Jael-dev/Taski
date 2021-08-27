@@ -3,7 +3,7 @@
     <v-footer class="__footer">
       <v-flex
         class="text-xs-center"
-      >Copyright &copy; Taski {{ new Date().getFullYear() }}. Powered by N-Tec Labs.</v-flex>
+      >Copyright &copy; Taski {{ new Date().getFullYear() }}. Powered by Jael Kalvin.me</v-flex>
     </v-footer>
   </center>
 </template>

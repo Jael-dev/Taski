@@ -4,6 +4,10 @@
     <Appbar />
     <!-- / app bar -->
 
+    <!-- info -->
+    <Info/>
+    <!-- / info -->
+
     <v-main>
       <router-view />
     </v-main>
@@ -15,6 +19,8 @@
     <!-- footer -->
     <Footer/>
     <!-- / footer -->
+
+
   </v-app>
 </template>
 
@@ -22,13 +28,15 @@
 import Appbar from "@/components/Appbar";
 import SideBar from "@/components/Sidebar";
 import Footer from "@/components/Footer";
+import Info from "@/components/Info";
 
 export default {
   name: "App",
   components: {
     Appbar,
     SideBar,
-    Footer
+    Footer,
+    Info
   },
 
   data: () => ({
