@@ -1,5 +1,5 @@
 <template>
-    <div class="caption mt-3">
+    <div class="pa-10">
         <span title="GitHub Project URL">
           <v-icon class="mr-1 mt-n1">mdi-github</v-icon>
           <a href="http://github.com/nteclabs" target="_blank">http://github.com/nteclabs</a>
@@ -19,4 +19,8 @@
       </div>
 </template>
 
-<script>
+<style scoped>
+
+</style>
+
+

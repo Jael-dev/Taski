@@ -21,22 +21,23 @@
     <!-- / footer -->
 
 
+
   </v-app>
 </template>
 
 <script>
 import Appbar from "@/components/Appbar";
+import Info from "@/components/Info";
 import SideBar from "@/components/Sidebar";
 import Footer from "@/components/Footer";
-import Info from "@/components/Info";
 
 export default {
   name: "App",
   components: {
     Appbar,
+    Info,
     SideBar,
     Footer,
-    Info
   },
 
   data: () => ({
