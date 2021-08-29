@@ -6,16 +6,16 @@
       permanent
       app
     >
-      <v-list-item to="/u/profile" class="px-2">
+      <v-list-item to="/u/profile" class="px-2" color="#A544B9">
         <v-list-item-avatar>
           <v-img src="/jael.png"></v-img>
         </v-list-item-avatar>
 
         <v-list-item-title>Jaël Kalvin</v-list-item-title>
 
-        <v-btn icon @click.stop="mini = !mini">
+         <!-- <v-btn icon @click.stop="mini = !mini">
           <v-icon>mdi-chevron-left</v-icon>
-        </v-btn>
+        </v-btn>  -->
       </v-list-item>
 
       <v-divider></v-divider>
@@ -34,6 +34,17 @@
           </v-list-item-action>
         </v-list-item>
       </v-list>
+
+      <template v-slot:append>
+        <div class="pa-2">
+          <v-btn 
+          color="purple"
+          block
+          >
+            Logout
+          </v-btn>
+        </div>
+      </template>
       <!--  -->
     </v-navigation-drawer>
   </v-app>

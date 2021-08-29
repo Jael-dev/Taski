@@ -1,5 +1,5 @@
 <template>
-    <v-card max-width="374" class="rounded-xl">
+    <v-card max-width="374" class="rounded-xl mt-3">
         <v-toolbar elevation="0">
             <v-spacer></v-spacer>
             <v-title >

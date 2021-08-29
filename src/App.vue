@@ -3,40 +3,28 @@
     <!-- app bar -->
     <Appbar />
     <!-- / app bar -->
-
-    <!-- info -->
-    <Info/>
-    <!-- / info -->
-
-    <v-main>
-      <router-view />
+   
+    <!-- Where all the routes are loaded -->
+     <v-main>  
+       <router-view />
     </v-main>
-
-    <!-- side bar -->
-    <SideBar />
-    <!-- / side bar -->
+    <!-- Where all the routes are loaded -->
 
     <!-- footer -->
     <Footer/>
     <!-- / footer -->
-
-
 
   </v-app>
 </template>
 
 <script>
 import Appbar from "@/components/Appbar";
-import Info from "@/components/Info";
-import SideBar from "@/components/Sidebar";
 import Footer from "@/components/Footer";
 
 export default {
   name: "App",
   components: {
     Appbar,
-    Info,
-    SideBar,
     Footer,
   },
 

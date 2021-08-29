@@ -1,5 +1,6 @@
 <template>
-    <div class="pa-10">
+<div class="pt-4 ml-5 mb-5">
+    <div class="mb-5">
         <span title="GitHub Project URL">
           <v-icon class="mr-1 mt-n1">mdi-github</v-icon>
           <a href="http://github.com/nteclabs" target="_blank">http://github.com/nteclabs</a>
@@ -16,6 +17,7 @@
           <v-icon class="mr-1 mt-n1">mdi-account-multiple-plus</v-icon>
           <a href="#">Projects(5)</a>
         </span>
+      </div>
       </div>
 </template>
 
