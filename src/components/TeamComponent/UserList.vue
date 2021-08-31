@@ -1,7 +1,8 @@
 <template>
     <v-card>
         <v-toolbar
-        color="grey"
+        color="transparent"
+        elevation="0"
         >
         <v-spacer></v-spacer>
       <v-btn icon>

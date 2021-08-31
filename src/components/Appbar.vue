@@ -158,6 +158,12 @@ export default({
         },
         { 
           id:8,
+          title: "Users", 
+          icon: "mdi-account-circle-outline", 
+          to: "/users" 
+        },
+        { 
+          id:9,
           title: "Settings", 
           icon: "mdi-cog-outline", 
           to: "/settings" 
