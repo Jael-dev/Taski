@@ -10,22 +10,17 @@
     </v-main>
     <!-- Where all the routes are loaded -->
 
-    <!-- footer -->
-    <Footer/>
-    <!-- / footer -->
 
   </v-app>
 </template>
 
 <script>
 import Appbar from "@/components/Appbar";
-import Footer from "@/components/Footer";
 
 export default {
   name: "App",
   components: {
     Appbar,
-    Footer,
   },
 
   data: () => ({

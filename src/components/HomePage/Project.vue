@@ -63,21 +63,23 @@ export default({
 
   data(){
     return {
-      projects : "",
+      projects : ""
     }
   },
   methods:{
-    get_data(){
+    
+    async get_data(){
+      try{
 
-      axios.get('http://localhost:8001/api/AdminProjects').then( (response) =>{
+      const response = await axios.get('http://localhost:8001/api/AdminProjects')
 
-        console.log(response['data']['data'])
+      this.projects = response['data']['data']
 
-         this.projects = response['data']['data']
+      }catch (e) {
+        
+      this.errors.push(e)
+    }
 
-         return this.projects
-
-      })
 
     }
   },
@@ -85,6 +87,9 @@ export default({
    mounted(){
     this.get_data()
   },
+
+  
+
  
 })
 </script>

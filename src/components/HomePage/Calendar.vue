@@ -1,6 +1,7 @@
 <template>
-    <div class="mt-6">
+    <div class="mt-3">
         <v-date-picker
+        width="360"
         v-model="date"
         :event-color="date => date[9] % 2 ? 'red' : 'yellow'"
         :events="functionEvents"

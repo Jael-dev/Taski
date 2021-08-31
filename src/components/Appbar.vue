@@ -87,6 +87,7 @@
           <v-btn 
           color="purple"
           block
+          @click="Login()"
           >
             Logout
           </v-btn>
@@ -94,14 +95,20 @@
       </template>
       <!--  -->
     </v-navigation-drawer>
+    
+     <!-- <Footer/> -->
   </span>
 </template>
 
 
 <script>
+import Footer from '@/components/Footer.vue'
 
 export default({
   name: "App",
+  components:{
+    Footer
+  },
   data() {
     return {
       hover: false,
@@ -197,6 +204,10 @@ export default({
         this.defaultAppBarColour = "#f15a24";
       }
     },
+    Login(){
+      let route = this.$router.resolve({ path: "/dashboard" });
+      window.open(route.href);
+    }
   },
    mini: false,
  })

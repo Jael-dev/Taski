@@ -11,7 +11,7 @@
 .__footer {
   color: #5f6368;
   font-size: 14.5px;
-  background: #f2f2f2;
+  background: #5f6368;
   position: absolute;
   bottom: 0;
   width: 100%;

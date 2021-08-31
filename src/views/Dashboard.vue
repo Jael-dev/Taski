@@ -1,11 +1,17 @@
  <template>
- <div>
+ <div> <Info/>
    <v-row>
      <v-col><Project/></v-col>
-     <v-col><MyTasks/></v-col>
      <v-col>
-       <v-row><Calendar/></v-row>
-       <v-row></v-row>
+       <MyTasks/>
+       <Projects/>
+      </v-col>
+     <v-col>
+       <Calendar/>
+       <v-text>Trend</v-text>
+       <Chart/>
+       <Chart/>
+       <Chart/>
      </v-col>
    </v-row>
  </div>
@@ -13,16 +19,22 @@
 
 <script>
 import Project from '@/components/HomePage/Project.vue'
+import Projects from '@/components/HomePage/Projects.vue'
 import MyTasks from '@/components/HomePage/MyTasks.vue'
 import Calendar from '@/components/HomePage/Calendar.vue'
 import Sparkline from '@/components/HomePage/Sparkline.vue'
+import Chart from '@/components/ChartsComponent/D3SlicesChart.vue'
+import Info from '@/components/Info.vue'
 export default ({
 
   components:{
     Project,
     MyTasks,
     Calendar,
-    Sparkline
+    Sparkline,
+    Projects,
+    Chart,
+    Info
   }
 
 })
