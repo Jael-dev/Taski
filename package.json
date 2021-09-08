@@ -7,6 +7,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@mycure/vue-jitsi-meet": "0.0.7",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "moment": "^2.29.1",

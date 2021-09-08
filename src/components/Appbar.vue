@@ -76,16 +76,16 @@
           <v-list-item-content>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
-          <v-list-item-action>
-            <v-sheet height="20" width="5" shaped color="purple"></v-sheet>
-          </v-list-item-action>
+           <v-list-item-action>
+             <v-spacer></v-spacer>
+            <v-sheet shaped color="#A544B9" width="5" height="20"></v-sheet>
+        </v-list-item-action>
         </v-list-item>
       </v-list>
-
-      <template v-slot:append>
+               <template v-slot:append>
         <div class="pa-2">
           <v-btn 
-          color="purple"
+          color="#A544B9"
           block
           @click="Login()"
           >
@@ -93,7 +93,6 @@
           </v-btn>
         </div>
       </template>
-      <!--  -->
     </v-navigation-drawer>
     
      <!-- <Footer/> -->
@@ -103,9 +102,7 @@
 
 <script>
 import Footer from '@/components/Footer.vue'
-
 export default({
-  name: "App",
   components:{
     Footer
   },
@@ -113,6 +110,7 @@ export default({
     return {
       hover: false,
       drawer: true,
+      mini: false,
       items: [
         {
           id:1,
@@ -215,7 +213,6 @@ export default({
       window.open(route.href);
     }
   },
-   mini: false,
+   
  })
-
 </script>

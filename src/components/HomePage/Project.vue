@@ -71,7 +71,7 @@ export default({
     async get_data(){
       try{
 
-      const response = await axios.get('http://localhost:8001/api/AdminProjects')
+      const response = await axios.get('http://localhost:8000/api/AdminProjects')
 
       this.projects = response['data']['data']
 

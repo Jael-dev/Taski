@@ -23,10 +23,11 @@
         </h2>
       </v-card-text>
 
-      <form class="pa-10">
-        <v-text>Password</v-text>
+      <form class="pa-10" @submit="Login()" method="post">
+        <v-text name="password">Password</v-text>
         <v-text-field
-          v-model="name"
+          v-model="info.name"
+          name="name"
           :error-messages="nameErrors"
           label="*********"
           required
@@ -38,7 +39,8 @@
         ></v-text-field>
         <v-text>Email</v-text>
         <v-text-field
-          v-model="email"
+          v-model="info.email"
+          name="email"
           :error-messages="emailErrors"
           label="xyz@gmail.com"
           required
@@ -65,7 +67,7 @@
         <v-col>
           <v-row align="center" justify="space-around"
             ><v-btn rounded-lg color="#A544B9"
-            width="300">
+            width="300" type="submit">
               <v-text>Login</v-text>
             </v-btn></v-row
           >
@@ -111,6 +113,15 @@ export default {
     },
   },
 
+  data(){
+    return {
+      info:{
+        name:null,
+        email:null
+      }
+    }
+  },
+
 
   computed: {
     checkboxErrors() {
@@ -137,15 +148,18 @@ export default {
   },
 
   methods: {
-    submit() {
-      this.$v.$touch();
-    },
     clear() {
       this.$v.$reset();
       this.name = "";
       this.email = "";
       this.checkbox = false;
     },
+    Login(e){
+
+      console.log(this.info);
+      e.preventDefault();
+
+    }
   },
 };
 </script>
