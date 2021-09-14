@@ -5,8 +5,9 @@
         @click="openMeeting"
         fab
         :color="color"
+        elevation="0"
       >
-        <v-icon dark> mdi-video </v-icon>
+        <v-icon> mdi-video </v-icon>
       </v-btn>
     </v-div>
 
@@ -33,7 +34,7 @@ export default {
     openMeeting() {
       console.log("opening window");
       window.open(
-        "/_meet/call?roomName=" +
+        "https://vue-jitsi-simple.vercel.app/_meet/call?roomName=" +
           this.roomName +
           "&email=" +
           this.email +

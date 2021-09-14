@@ -29,8 +29,11 @@ export default {
 </script>
 
 <style>
-* {
-  font-family: "Times New Roman", Times, serif;
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
 }
 a:hover{
   text-decoration: none;

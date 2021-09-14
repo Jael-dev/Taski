@@ -18,10 +18,15 @@
       <v-btn icon>
         <v-icon>mdi-bell</v-icon>
       </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-video</v-icon>
-      </v-btn>
-
+      <!-- video component -->
+      <Video 
+        roomName="testing"
+        email="teste@gmail.com"
+        displayName="fotiecodes"
+        color="#A544B9"
+        roundedBtnWithIcon/>
+        
+      <!-- / video component -->
       <!-- Dark option -->
       <div>
         <v-tooltip v-if="!$vuetify.theme.dark" bottom>
@@ -102,9 +107,12 @@
 
 <script>
 import Footer from '@/components/Footer.vue'
+import Video from '@/components/VideoComponents/Video.vue'
+
 export default({
   components:{
-    Footer
+    Footer,
+    Video
   },
   data() {
     return {
