@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Registration from '../views/Registration.vue'
+import VideoCall from '../views/VideoCall.vue'
 
 Vue.use(VueRouter)
 
@@ -11,6 +12,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/_meet/call',
+    name: 'VideoCall',
+    component: VideoCall
   },
   {
     path: '/login',
@@ -31,6 +37,11 @@ const routes = [
     path: '/projects',
     name: 'Projects',
     component: () => import( '../views/Projects.vue')
+  },
+  {
+    path: '/users',
+    name: 'users',
+    component: () => import( '../views/Users.vue')
   },
   {
     path: '/reports',

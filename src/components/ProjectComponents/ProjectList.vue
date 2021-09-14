@@ -1,57 +1,38 @@
 <template>
-  <v-card class="mx-auto rounded-xl" color="#F7F7F4" >
-    <v-toolbar color="#A544B9" dark>
-      <v-toolbar-title>Orders</v-toolbar-title>
-
-      <v-spacer></v-spacer>
-
-      <v-btn icon>
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
-    </v-toolbar>
-
-    <v-list>
-      <v-list-item v-for="order in orders" :key="order.title">
-        
-
-        <v-list-item-content>
+  <v-card>
+    <v-card-text v-for="order in orders" :key="order.title">
+      <v-list flat>
+        <v-list-item>
+          <v-list-item-content>
             <v-row>
+              <v-col>
+                <v-list-item-title v-text="order.name"></v-list-item-title>
+                <v-list-item-subtitle
+                  v-text="order.title"
+                ></v-list-item-subtitle>
+              </v-col>
 
-                <v-col>
-          <v-list-item-title v-text="order.name"></v-list-item-title>
-          <v-list-item-subtitle v-text="order.title"></v-list-item-subtitle>
-          </v-col>
+              <v-spacer></v-spacer>
 
-          <v-col> <v-list-item-avatar>
-          <v-img :alt="`${order.title} avatar`" :src="order.avatar"></v-img>
-        </v-list-item-avatar>
-        </v-col>
+              <span v-for="order in orders" :key="order.title">
+                <v-avatar class="mb-0" size="35">
+                  <img :src="order.avatar" :alt="order.title" />
+                </v-avatar>
+              </span>
+
+              <v-spacer></v-spacer>
             </v-row>
-
-         
-        </v-list-item-content>
-
-        <v-list-item-action>
-          <v-col>
-            <v-row><AcceptBtn /></v-row>
-            <v-row><DenyBtn /></v-row>
-          </v-col>
-        </v-list-item-action>
-      </v-list-item>
-      <v-divider dark></v-divider>
-    </v-list>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-divider></v-divider>
+    </v-card-text>
   </v-card>
 </template>
 
 <script>
-import AcceptBtn from "@/components/Buttons/Accept.vue";
-import DenyBtn from "@/components/Buttons/Deny.vue";
-
 export default {
-  components: {
-    AcceptBtn,
-    DenyBtn,
-  },
+  components: {},
   data: () => ({
     orders: [
       {

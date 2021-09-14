@@ -1,5 +1,5 @@
  <template>
- <div> <Info/>
+ <div class="dashboard"> <Info/>
    <v-row>
      <v-col><Project/></v-col>
      <v-col>
@@ -39,3 +39,9 @@ export default ({
 
 })
 </script>
+
+<style scoped>
+.dashboard{
+  
+}
+</style>
