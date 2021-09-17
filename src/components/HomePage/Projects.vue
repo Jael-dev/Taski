@@ -3,7 +3,7 @@
     <v-card max-width="374" class="rounded-xl mt-3 project">
       <v-toolbar elevation="0">
         <v-spacer></v-spacer>
-        <v-title> Projects ({{ projects.length }}) </v-title>
+        <p> Projects ({{ projects.length }}) </p>
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-divider></v-divider>
@@ -11,29 +11,30 @@
         <v-list flat>
           <v-list-item @click="get_time(project.id)">
             <template>
-              <v-list-item-action>
-                <v-icon
-                  fab
+              <v-list-text-field>
+                <v-alert class="ma-0"
+                  color="white"
                   :class="{
                     green: get_time(project.id) > 10,
                     orange: get_time(project.id) === 5,
                     red: get_time(project.id) < 5,
                   }"
-                  >mdi-timer</v-icon
+                  dark
+                  icon="mdi-timer"
+                  border="left"
+                  prominent
                 >
-              </v-list-item-action>
+                <v-row class="ml-1 mt-2">
+                  <v-list-item-title>{{ project.title }}</v-list-item-title>
 
-              <v-list-item-content>
-                <v-list-item-title
-                  >{{ project.title }}</v-list-item-title
-                >
-              </v-list-item-content>
-              <v-text>{{get_time(project.id)}} Days Remaining</v-text>
-              <v-list-item-action>
-                <v-btn icon>
-                 <v-app-bar-nav-icon></v-app-bar-nav-icon>
-                </v-btn>
-              </v-list-item-action>
+                 <p>{{ get_time(project.id) }} Days Remaining</p></v-row>
+                 
+                 
+                </v-alert>
+              </v-list-text-field>
+                
+
+           
             </template>
           </v-list-item>
         </v-list>
@@ -44,50 +45,14 @@
 </template>
 
 <script>
-var moment = require('moment');
+var moment = require("moment");
 export default {
   data() {
     return {
-      projects: [
-        {
-          id: 1,
-          title: "lol1",
-          description: "lol 2",
-          state: 1,
-          end_date: "2020-11-20",
-        },
-        {
-          id: 2,
-          title: "lol2",
-          description: "lol 2",
-          state: 1,
-          end_date: "2021-11-1",
-        },
-        {
-          id: 4,
-          title: "lol3",
-          description: "lol 2",
-          state: 2,
-          end_date: "2012-10-22",
-        },
-        {
-          id: 3,
-          title: "lol4",
-          description: "lol 2",
-          state: 3,
-          end_date: "2021-1-21",
-        },
-        {
-          id: 4,
-          title: "lol5",
-          description: "lol 2",
-          state: 1,
-          end_date: '2001-8-2',
-        },
-      ],
+      projects: "",
     };
   },
-   computed: function (x) {
+  computed: function(x) {
     this.get_time(x);
   },
 
@@ -103,39 +68,38 @@ export default {
         "-" +
         today.getDate();
 
-        const dateDiff= (start_date, end_date) => {
+      const dateDiff = (start_date, end_date) => {
         let start = moment(start_date);
         let end = moment(end_date);
         let duration = moment.duration(end.diff(start));
         let days = duration.asDays();
         return Math.round(days);
-        }
-        return dateDiff(date, project.end_date)
-      
+      };
+      return dateDiff(date, project.end_date);
     },
 
-    /*methods:{
+    async get_data() {
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/api/AdminProjects",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + this.$store.state.token,
+            },
+          }
+        );
 
-    async get_data(){
-      try{
-
-      const response = await axios.get('http://localhost:8001/api/projects')
-
-      this.projects = response['data']['data']
-
-      }catch (e) {
-        
-      this.errors.push(e)
-    }
-
-
-    }
+        this.projects = response["data"]["data"];
+      } catch (e) {
+        this.errors.push(e);
+      }
+    },
   },
-
-   mounted(){
-    this.get_data()
-  },
-  */
+  mounted() {
+    setInterval(() => {
+      this.get_data();
+    }, 5000);
   },
 };
 </script>

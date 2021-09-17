@@ -19,7 +19,7 @@
             fab
             elevation="0"
           >
-            <v-icon color="purple">mdi-plus</v-icon>
+            <v-icon color="#A544B9">mdi-plus</v-icon>
           </v-btn>
         </template>
 
@@ -35,7 +35,7 @@
           </v-toolbar>
 
           <v-card-text class="mt-0">
-            <v-text-field label="Role Name" color="purple"></v-text-field>
+            <v-text-field label="Role Name" color="#A544B9"></v-text-field>
             <v-text>User</v-text>
 
             <v-container fluid>

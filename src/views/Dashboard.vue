@@ -8,7 +8,7 @@
       </v-col>
      <v-col>
        <Calendar/>
-       <v-text>Trend</v-text>
+       <p>Trend</p>
        <Chart/>
        <Chart/>
        <Chart/>
@@ -22,7 +22,6 @@ import Project from '@/components/HomePage/Project.vue'
 import Projects from '@/components/HomePage/Projects.vue'
 import MyTasks from '@/components/HomePage/MyTasks.vue'
 import Calendar from '@/components/HomePage/Calendar.vue'
-import Sparkline from '@/components/HomePage/Sparkline.vue'
 import Chart from '@/components/ChartsComponent/D3SlicesChart.vue'
 import Info from '@/components/Info.vue'
 export default ({
@@ -31,11 +30,14 @@ export default ({
     Project,
     MyTasks,
     Calendar,
-    Sparkline,
     Projects,
     Chart,
     Info
-  }
+  },
+  //  props: {
+  //   userId: id,
+  //   userToken: token 
+  // },
 
 })
 </script>

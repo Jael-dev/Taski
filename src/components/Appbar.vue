@@ -9,18 +9,25 @@
       dense
       dark
       height="56"
+      v-if="isLoggedIn"
     >
 
-      <v-toolbar-title>{{}}</v-toolbar-title>
+      <v-toolbar-title>{{this.$router.history.current.path}}</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
       <v-btn icon>
         <v-icon>mdi-bell</v-icon>
       </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-video</v-icon>
-      </v-btn>
+      <!-- video component -->
+      <Video 
+        roomName="testing"
+        email="teste@gmail.com"
+        displayName="jael"
+        color="#A544B9"
+        roundedBtnWithIcon/>
+
+      <!-- / video component -->
 
       <!-- Dark option -->
       <div>
@@ -55,10 +62,10 @@
     >
       <v-list-item to="/u/profile" class="px-2" color="#A544B9">
         <v-list-item-avatar>
-          <v-img src="/jael.png"></v-img>
+          <v-img :alt="`${this.user.name} avatar`" :src=this.user.avatar></v-img>
         </v-list-item-avatar>
 
-        <v-list-item-title>Jaël Kalvin</v-list-item-title>
+        <v-list-item-title> {{this.user.name}}</v-list-item-title>
 
          <!-- <v-btn icon @click.stop="mini = !mini">
           <v-icon>mdi-chevron-left</v-icon>
@@ -68,7 +75,7 @@
       <v-divider></v-divider>
 
       <v-list dense>
-        <v-list-item v-for="item in items" :key="item.title" :to="item.to" link>
+        <v-list-item  v-for="item in items" :key="item.title" :to="item.to" :target="item.target" link>
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -87,7 +94,7 @@
           <v-btn 
           color="#A544B9"
           block
-          @click="Login()"
+          @click="logout()"
           >
             Logout
           </v-btn>
@@ -102,12 +109,18 @@
 
 <script>
 import Footer from '@/components/Footer.vue'
+import Video from '@/components/VideoComponents/video.vue'
 export default({
   components:{
-    Footer
+    Footer,
+    Video
   },
+  computed : {
+      isLoggedIn : function(){ return this.$store.getters.isLoggedIn},
+    },
   data() {
     return {
+      user:'',
       hover: false,
       drawer: true,
       mini: false,
@@ -146,7 +159,7 @@ export default({
           id:6,
           title: "Chat", 
           icon: "mdi-forum-outline", 
-          to: "/chat" 
+          to: "/chat",
         },
         { 
           id:7,
@@ -167,36 +180,6 @@ export default({
           to: "/settings" 
         },
       ],
-      user:[
-        {
-          id:1,
-          permissions:[
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-          ]
-        }
-      ],
-      mini: false,
     };
   },
     methods: {
@@ -208,11 +191,17 @@ export default({
         this.defaultAppBarColour = "#f15a24";
       }
     },
-    Login(){
-      let route = this.$router.resolve({ path: "/dashboard" });
-      window.open(route.href);
-    }
+      logout: function () {
+        this.$store.dispatch('logout')
+        .then(() => {
+          this.$router.push('/login')
+        })
+      }
   },
+  mounted(){
+   this.user = JSON.parse(localStorage.getItem("user"));
+  }
+
    
  })
 </script>

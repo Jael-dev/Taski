@@ -1,7 +1,7 @@
 <template>
-<v-div class="landingPage">
+<div class="landingPage">
   <LandingPage/>
-</v-div>
+</div>
 </template>
 
 <script>

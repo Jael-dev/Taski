@@ -2,7 +2,7 @@
     <div class="container1">
       <v-sparkline 
       :fill="true"
-      :gradient="['#BC00FE','violet','#A544B9']"
+      :gradient="['#BC00FE','#A544B9','#8F00FF']"
       :line-width="2"
       :padding="0"
       :smooth="10"
@@ -31,6 +31,7 @@ export default {
 .container1 {
     position: fixed;
     bottom: 0;
+    left: 0;
     width: 100%;
     overflow: hidden;
     background-color:transparent;

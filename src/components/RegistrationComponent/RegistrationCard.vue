@@ -1,8 +1,7 @@
 <template>
   <div class="">
     <v-row>
-      <v-col cols="6" md="4" align="center">
-      </v-col>
+      <v-col cols="6" md="4" align="center"> </v-col>
       <v-col cols="12" sm="6" md="8">
         <v-card
           class="mr-0 ml-auto mt-0 mb-0 rounded-xl"
@@ -25,69 +24,36 @@
           <form class="pa-15">
             <v-row>
               <v-col>
-                <v-text>Password</v-text>
+                <p>First Name</p>
                 <v-text-field
-                  v-model="name"
+                  v-model="firstname"
                   :error-messages="nameErrors"
-                  label="*********"
-                  required
-                  outlined
-                  clearable
-                  color="#A544B9"
-                  @input="$v.name.$touch()"
-                  @blur="$v.name.$touch()"
-                ></v-text-field
-              ></v-col>
-              <v-col>
-                <v-text>Password</v-text>
-                <v-text-field
-                  v-model="name"
-                  :error-messages="nameErrors"
-                  label="*********"
-                  required
-                  outlined
-                  clearable
-                  color="#A544B9"
-                  @input="$v.name.$touch()"
-                  @blur="$v.name.$touch()"
-                ></v-text-field
-              ></v-col>
-            </v-row>
-
-            <v-row>
-              <v-col>
-                <v-text>Email</v-text>
-                <v-text-field
-                  v-model="email"
-                  :error-messages="emailErrors"
-                  label="xyz@gmail.com"
+                  label="First Name"
                   required
                   color="#A544B9"
                   outlined
                   clearable
-                  @input="$v.email.$touch()"
-                  @blur="$v.email.$touch()"
+                  @input="$v.firstname.$touch()"
+                  @blur="$v.firstname.$touch()"
                 ></v-text-field>
               </v-col>
               <v-col>
-                <v-text>Email</v-text>
+                <p>Last Name</p>
                 <v-text-field
-                  v-model="email"
-                  :error-messages="emailErrors"
-                  label="xyz@gmail.com"
-                  required
+                  v-model="lastname"
+                  label="Last Name"
                   color="#A544B9"
                   outlined
                   clearable
-                  @input="$v.email.$touch()"
-                  @blur="$v.email.$touch()"
-                ></v-text-field
-              ></v-col>
+                  @input="$v.lastname.$touch()"
+                  @blur="$v.lastname.$touch()"
+                ></v-text-field>
+              </v-col>
             </v-row>
 
             <v-row>
               <v-col>
-                <v-text>Email</v-text>
+                <p>Email</p>
                 <v-text-field
                   v-model="email"
                   :error-messages="emailErrors"
@@ -95,23 +61,53 @@
                   required
                   color="#A544B9"
                   outlined
+                  type="email"
                   clearable
                   @input="$v.email.$touch()"
                   @blur="$v.email.$touch()"
                 ></v-text-field
               ></v-col>
               <v-col>
-                <v-text>Email</v-text>
+                <p>Phone Number</p>
                 <v-text-field
-                  v-model="email"
-                  :error-messages="emailErrors"
-                  label="xyz@gmail.com"
+                  v-model="number"
                   required
+                  :error-messages="numberErrors"
                   color="#A544B9"
                   outlined
+                  type="number"
                   clearable
-                  @input="$v.email.$touch()"
-                  @blur="$v.email.$touch()"
+                  @input="$v.number.$touch()"
+                  @blur="$v.number.$touch()"
+                ></v-text-field
+              ></v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <p>Password</p>
+                <v-text-field
+                  v-model="password"
+                  :error-messages="passwordErrors"
+                  required
+                  outlined
+                  type="password"
+                  clearable
+                  color="#A544B9"
+                  @input="$v.password.$touch()"
+                  @blur="$v.password.$touch()"
+                ></v-text-field
+              ></v-col>
+              <v-col>
+                <p>Confirmed Password *</p>
+                <v-text-field
+                  v-model="cpassword"
+                  required
+                  outlined
+                  type="password"
+                  clearable
+                  color="#A544B9"
+                  @input="$v.cpassword.$touch()"
+                  @blur="$v.cpassword.$touch()"
                 ></v-text-field
               ></v-col>
             </v-row>
@@ -131,8 +127,19 @@
             <v-col>
               <v-spacer class="pa-5"></v-spacer>
               <v-row align="center" justify="space-around" class="float-right"
-                ><v-btn rounded-lg color="#A544B9" width="200" class="pa-7">
-                  <v-text>Register</v-text>
+                ><v-btn
+                  rounded-lg
+                  color="#A544B9"
+                  width="200"
+                  class="pa-7"
+                  @click="
+                    SignIn();
+                    loader = 'loading';
+                  "
+                  :loading="loading"
+                  :disabled="loading"
+                >
+                  Register
                 </v-btn>
               </v-row>
             </v-col>
@@ -152,13 +159,31 @@ export default {
   mixins: [validationMixin],
 
   validations: {
-    name: { required },
+    firstname: { required, maxLength: maxLength(50) },
     email: { required, email },
+    lastname: { required },
+    password: { required, maxLength: maxLength(8) },
+    cpassword: { required, maxLength: maxLength(8) },
+    number: { required, maxLength: maxLength(9) },
     checkbox: {
       checked(val) {
         return val;
       },
     },
+  },
+
+  data() {
+    return {
+      loader: null,
+      loading: false,
+      firstname: "",
+      lastname: "",
+      email: "",
+      password: "",
+      cpassword: "",
+      number: "",
+      row: "",
+    };
   },
 
   computed: {
@@ -170,10 +195,26 @@ export default {
     },
     nameErrors() {
       const errors = [];
-      if (!this.$v.name.$dirty) return errors;
-      !this.$v.name.maxLength &&
-        errors.push("Name must be at most 10 characters long");
-      !this.$v.name.required && errors.push("Name is required.");
+      if (!this.$v.firstname.$dirty) return errors;
+      !this.$v.firstname.maxLength &&
+        errors.push("Name must be at most 8  characters long");
+      !this.$v.firstname.required && errors.push("Name is required.");
+      return errors;
+    },
+    passwordErrors() {
+      const errors = [];
+      if (!this.$v.password.$dirty) return errors;
+      !this.$v.password.maxLength &&
+        errors.push("Password must be at most 8 characters long");
+      !this.$v.password.required && errors.push("Password is required.");
+      return errors;
+    },
+    numberErrors() {
+      const errors = [];
+      if (!this.$v.number.$dirty) return errors;
+      !this.$v.number.maxLength &&
+        errors.push("number must be at most 9 characters long");
+      !this.$v.number.required && errors.push("number is required.");
       return errors;
     },
     emailErrors() {
@@ -184,16 +225,31 @@ export default {
       return errors;
     },
   },
+  watch: {
+    loader() {
+      const l = this.loader;
+      this[l] = !this[l];
+
+      setTimeout(() => (this[l] = false), 3000);
+
+      this.loader = null;
+    },
+  },
 
   methods: {
-    submit() {
-      this.$v.$touch();
-    },
-    clear() {
-      this.$v.$reset();
-      this.name = "";
-      this.email = "";
-      this.checkbox = false;
+    async SignIn() {
+      try {
+        let email = this.email;
+        let password = this.password;
+        let c_password = this.cpassword;
+        let name = this.firstname + this.lastname;
+        let number = this.number;
+        this.$store
+          .dispatch("register", { email, password, c_password, name, number })
+          .then(() => this.$router.push("Dashboard"));
+      } catch (e) {
+        this.errors.push(e);
+      }
     },
   },
 };

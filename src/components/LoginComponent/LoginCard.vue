@@ -1,8 +1,6 @@
 <template>
-  <div class="mx-auto my-2"
-  >
-    <v-card class="mx-auto my-6 rounded-xl" color="white"
-    max-width="550">
+  <div class="mx-auto my-2">
+    <v-card class="mx-auto my-6 rounded-xl" color="white" max-width="550">
       <v-app-bar flat color="rgba(0, 0, 0, 0)">
         <v-spacer></v-spacer>
         <v-btn rounded color="#A544B9" dark outlined>
@@ -17,38 +15,36 @@
       ></v-img>
 
       <v-card-text class="black--text mt-0 pt-3 pl-10">
-        <v-text>Welcome Back</v-text>
+        <p>Welcome Back</p>
         <h2>
           Login to your account
         </h2>
       </v-card-text>
 
-      <form class="pa-10" @submit="Login()" method="post">
-        <v-text name="password">Password</v-text>
+      <form class="pa-10">
+        <p>Email</p>
         <v-text-field
-          v-model="info.name"
-          name="name"
-          :error-messages="nameErrors"
-          label="*********"
-          required
-          outlined
-          clearable
-          color="#A544B9"
-          @input="$v.name.$touch()"
-          @blur="$v.name.$touch()"
-        ></v-text-field>
-        <v-text>Email</v-text>
-        <v-text-field
-          v-model="info.email"
-          name="email"
+          v-model="email"
           :error-messages="emailErrors"
-          label="xyz@gmail.com"
           required
+          type="email"
           color="#A544B9"
           outlined
           clearable
           @input="$v.email.$touch()"
           @blur="$v.email.$touch()"
+        ></v-text-field>
+        <p>Password</p>
+        <v-text-field
+          v-model="password"
+          type="password"
+          :error-messages="passwordErrors"
+          required
+          outlined
+          clearable
+          color="#A544B9"
+          @input="$v.password.$touch()"
+          @blur="$v.password.$touch()"
         ></v-text-field>
         <v-row>
           <v-col>
@@ -56,42 +52,44 @@
               v-model="checkbox"
               :error-messages="checkboxErrors"
               label="Remember me"
-              required
-               color="#A544B9"
+              color="#A544B9"
               @change="$v.checkbox.$touch()"
               @blur="$v.checkbox.$touch()"
             ></v-checkbox>
           </v-col>
-          
         </v-row>
         <v-col>
           <v-row align="center" justify="space-around"
-            ><v-btn rounded-lg color="#A544B9"
-            width="300" type="submit">
-              <v-text>Login</v-text>
+            ><v-btn
+              rounded-lg
+              color="#A544B9"
+              width="300"
+              :loading="loading"
+              :disabled="loading"
+              @click="Login(); loader = 'loading'"
+            >
+              Login
             </v-btn></v-row
           >
           <v-spacer class="pa-5 "></v-spacer>
           <v-row align="center" justify="space-around">
-            <v-btn rounded-lg color="#2D3748" width="300" >
-              <v-icon 
-              color="white"
-              left>
+            <v-btn rounded-lg color="#2D3748" width="300">
+              <v-icon color="white" left>
                 mdi-github
               </v-icon>
-             <v-text>Or login with github</v-text>
+              Or login with github
             </v-btn>
           </v-row>
         </v-col>
       </form>
 
-      <v-row
-    align="center"
-    justify="space-around"
-  >
-    <v-text class="pa-5 ma-5">Don't have an acount?<v-text class="purple--text mt-0 pt-3 pl-1">Join free today</v-text></v-text>
-  </v-row>
-      
+      <v-row align="center" justify="space-around">
+        <div>
+          Don't have an acount?<v-btn text color="#A544B9"
+            >Join free today</v-btn
+          >
+        </div>
+      </v-row>
     </v-card>
   </div>
 </template>
@@ -104,7 +102,7 @@ export default {
   mixins: [validationMixin],
 
   validations: {
-    name: { required},
+    password: { required, maxLength: maxLength(8) },
     email: { required, email },
     checkbox: {
       checked(val) {
@@ -113,15 +111,26 @@ export default {
     },
   },
 
-  data(){
+  data() {
     return {
-      info:{
-        name:null,
-        email:null
-      }
-    }
+      loader: null,
+      loading: false,
+      checkbox: false,
+      user: null,
+      password: "",
+      email: "",
+    };
   },
+  watch: {
+    loader() {
+      const l = this.loader;
+      this[l] = !this[l];
 
+      setTimeout(() => (this[l] = false), 3000);
+
+      this.loader = null;
+    },
+  },
 
   computed: {
     checkboxErrors() {
@@ -130,12 +139,12 @@ export default {
       !this.$v.checkbox.checked && errors.push("You must agree to continue!");
       return errors;
     },
-    nameErrors() {
+    passwordErrors() {
       const errors = [];
-      if (!this.$v.name.$dirty) return errors;
-      !this.$v.name.maxLength &&
-        errors.push("Name must be at most 10 characters long");
-      !this.$v.name.required && errors.push("Name is required.");
+      if (!this.$v.password.$dirty) return errors;
+      !this.$v.password.maxLength &&
+        errors.push("Password must be at most 8 characters long");
+      !this.$v.password.required && errors.push("Password is required.");
       return errors;
     },
     emailErrors() {
@@ -150,16 +159,60 @@ export default {
   methods: {
     clear() {
       this.$v.$reset();
-      this.name = "";
+      this.password = "";
       this.email = "";
       this.checkbox = false;
     },
-    Login(e){
-
-      console.log(this.info);
-      e.preventDefault();
-
-    }
+    async Login(e) {
+      this.$v.$touch()
+      try {
+        let email = this.email;
+        let password = this.password;
+        this.$store
+          .dispatch("login", { email, password })
+          .then(() => this.$router.push("Dashboard"));
+      } catch (e) {
+        this.errors.push(e);
+      }
+    },
   },
 };
 </script>
+<style>
+.custom-loader {
+  animation: loader 1s infinite;
+  display: flex;
+}
+@-moz-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>

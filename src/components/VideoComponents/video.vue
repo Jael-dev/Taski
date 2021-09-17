@@ -1,21 +1,22 @@
 <template>
-  <v-div>
-    <v-div v-if="roundedBtnWithIcon">
+  <div>
+    <div v-if="roundedBtnWithIcon">
       <v-btn
         @click="openMeeting"
         fab
         :color="color"
+         elevation="0"
       >
-        <v-icon dark> mdi-video </v-icon>
+        <v-icon> mdi-video </v-icon>
       </v-btn>
-    </v-div>
+    </div>
 
-    <v-div v-else>
+    <div v-else>
       <v-btn elevation="0" :color="color" @click="openMeeting">{{
         btnDisplayText
       }}</v-btn>
-    </v-div>
-  </v-div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -33,7 +34,7 @@ export default {
     openMeeting() {
       console.log("opening window");
       window.open(
-        "/_meet/call?roomName=" +
+        "https://vue-jitsi-simple.vercel.app/_meet/call?roomName=" +
           this.roomName +
           "&email=" +
           this.email +

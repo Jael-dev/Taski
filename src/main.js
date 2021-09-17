@@ -10,6 +10,11 @@ import moment from 'moment'
 Vue.config.productionTip = false
 window.axios = axios
 axios.defaults.baseURL = 'http://127.0.0.1:8001'
+Vue.prototype.$http = axios;
+const token = localStorage.getItem('token')
+if (token) {
+  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+}
 
 new Vue({
   router,

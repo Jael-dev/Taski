@@ -15,7 +15,7 @@
         </span>
         <span class="ml-5" title="Projects you've been assigned to">
           <v-icon class="mr-1 mt-n1" color="purple">mdi-account-multiple-plus</v-icon>
-          <a href="#">Projects(5)</a>
+          <a href="#">Projects({{projects.length}})</a>
         </span>
       </div>
       </div>
@@ -24,5 +24,44 @@
 <style scoped>
 
 </style>
+
+<script>
+export default ({
+  data() {
+    return {
+      projects:{}
+    };
+  },
+ methods: {
+    async get_data() {
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/api/AdminProjects",
+          {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+this.$store.state.token
+          }   
+          }
+        );
+
+        this.projects = response["data"]["data"];
+      } catch (e) {
+        console.log((e));
+      }
+    },
+  },
+  computed : {
+      isLoggedIn : function(){ return this.$store.getters.isLoggedIn}
+    },
+
+  mounted() {
+    setInterval(() => {
+      this.get_data();
+    }, 5000);
+  }
+})
+</script>
+
 
 

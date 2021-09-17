@@ -3,7 +3,7 @@
   <v-card max-width="374" class="rounded-xl mt-3 task">
     <v-toolbar elevation="0" >
       <v-spacer></v-spacer>
-      <v-title> My Tasks ({{ tasks.length }}) </v-title>
+      <p> My Tasks ({{ tasks.length }}) </p>
       <v-spacer></v-spacer>
     </v-toolbar>
     <v-divider></v-divider>
@@ -12,25 +12,29 @@
           <v-list-item>
             <template v-text="scrollInvoked">
               <v-list-item-action>
-                <v-text>{{ index + 1 }}</v-text>
+                <p>{{ index + 1 }}</p>
               </v-list-item-action>
 
               <v-list-item-content>
                 <v-list-item-title
-                  :class="{ 'text-decoration-line-through': task.state === 1 }"
+                  :class="{ 'text-decoration-line-through': task.state === 1,
+                  'text--secondary':task.state === 2,
+                  'text--disabled':task.state === 3  }"
                   >{{ task.title }}</v-list-item-title
                 >
               </v-list-item-content>
               <v-list-item-action>
-                <v-btn icon>
-                  <v-icon
-                    fab
-                    color="white"
-                    :class="{
+                <v-btn  
+                :class="{
                       green: task.state === 1,
                       orange: task.state === 2,
                       red: task.state === 3,
                     }"
+                    icon>
+                  <v-icon
+                    fab
+                    color="white"
+                   
                     >mdi-check</v-icon
                   >
                 </v-btn>
@@ -48,55 +52,29 @@
 export default {
   data() {
     return {
-      tasks: [
-        {
-          id: 1,
-          title: "lol1",
-          description: "lol 2",
-          state: 1,
-        },
-        {
-          id: 2,
-          title: "lol2",
-          description: "lol 2",
-          state: 1,
-        },
-        {
-          id: 4,
-          title: "lol3",
-          description: "lol 2",
-          state: 2,
-        },
-        {
-          id: 3,
-          title: "lol4",
-          description: "lol 2",
-          state: 3,
-        },
-        {
-          id: 4,
-          title: "lol5",
-          description: "lol 2",
-          state: 1,
-        },
-        
-      ],
+      tasks:{}
     };
   },
  
 
-  /*methods:{
+  methods:{
 
     async get_data(){
       try{
 
-      const response = await axios.get('http://localhost:8001/api/tasks')
+      const response = await axios.get('http://localhost:8000/api/tasks',
+       {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+this.$store.state.token
+          }   
+          })
 
       this.tasks = response['data']['data']
 
       }catch (e) {
         
-      this.errors.push(e)
+      console.log(this.errors)
     }
 
 
@@ -104,9 +82,11 @@ export default {
   },
 
    mounted(){
-    this.get_data()
+    setInterval(() => {
+      this.get_data();
+    }, 5000);
   },
-  */
+  
 };
 </script>
 

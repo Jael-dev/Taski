@@ -6,8 +6,9 @@
     class="pa-5 ma-10"
       rounded-lg
       color="#A544B9"
+      to="/login"
     >
-      <v-icon left>
+      <v-icon left color="white">
         mdi-chevron-right
       </v-icon>
       Place An Order
@@ -18,6 +19,7 @@
 <style >
 .container3 {
     position: fixed;
+    left: 1%;
     top: 60%;
     width: 100%;
     overflow: hidden;

@@ -1,8 +1,8 @@
 <template>
   <v-app id="app">
-    <div>
+    
     <!-- app bar -->
-    <Appbar />
+    <Appbar v-if="hasDashboard()"/>
     <!-- / app bar -->
    
     <!-- Where all the routes are loaded -->
@@ -10,7 +10,6 @@
        <router-view />
     </v-main>
     <!-- Where all the routes are loaded -->
-</div>
 
   </v-app>
 </template>
@@ -22,9 +21,15 @@ export default {
   components: {
     Appbar,
   },
-  data: () => ({
-    //
-  }),
+
+  methods:{
+   hasDashboard(){
+     
+     return (!(this.$router.history.current.path === '/registration' || this.$router.history.current.path === '/login' || this.$router.history.current.path === '/'))
+     
+    }
+  },
+
 };
 </script>
 

@@ -21,9 +21,9 @@
      
       <v-card-title
       class="user"
-      >Jael Ngouzong</v-card-title>
+      >{{user.name}}</v-card-title>
       <v-card-subtitle
-        >Full Stack Developer and Project Manager</v-card-subtitle
+        >{{user.name}}</v-card-subtitle
       >
       <v-rating
         v-model="rating"
@@ -40,7 +40,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
-          color="purple"
+          color="#A544B9"
           dark
           v-bind="attrs"
           v-on="on"
@@ -77,15 +77,14 @@
         </v-list>
 
         <v-divider></v-divider>
-<!--  Here I take the list of privileges from the db -->
-        <v-list v-for="privilege in privileges" :key="privilege.title">
+        <v-list v-for="privilege in privileges" :key="privilege.name">
           <v-list-item>
             <v-list-item-action>
               <v-switch
-                color="purple"
+                color="#A544B9"
               ></v-switch>
             </v-list-item-action>
-            <v-list-item-title>{{privilege.title}}</v-list-item-title>
+            <v-list-item-title>{{privilege.name}}</v-list-item-title>
           </v-list-item>
 
         </v-list>
@@ -100,7 +99,7 @@
             Cancel
           </v-btn>
           <v-btn
-            color="purple"
+            color="#A544B9"
             text
             @click="menu = false"
           >
@@ -119,29 +118,37 @@
 <script>
 export default {
 data: () => ({
+  user:'',
       rating: 4,
         fav: true,
       menu: false,
       message: false,
       hints: true,
-      privileges:[
-        { 
-          title: "edit name,1"
-        },
-        { 
-          title: "edit name,2"
-        },
-        { 
-          title: "edit name,3"
-        },
-        { 
-          title: "edit name,4"
-        },
-        { 
-          title: "edit name,5"
-        },
-      ]
+      privileges:''
     }),
+    methods:{
+       async get_data() {
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/api/permissions",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + this.$store.state.token,
+            },
+          }
+        );
+
+        this.privileges = response["data"]["data"];
+      } catch (e) {
+        this.errors.push(e);
+      }
+    },
+    },
+     mounted(){
+   this.user = JSON.parse(localStorage.getItem("user"));
+   this.get_data()
+  }
 };
 </script>
 <style>

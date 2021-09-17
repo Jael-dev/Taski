@@ -66,17 +66,31 @@ const routes = [
   {
     path: '/settings',
     name: 'Settings',
-    component: () => import( '../views/Settings.vue')
+    component: () => import( '../views/Tasks.vue')
   },
   {
+    // let routeData = this.$router.resolve({name: 'routeName', query: {data: "someData"}});
+// window.open(routeData.href, '_blank');
     path: '/chat',
     name: 'Chat',
     component: () => import( '../views/Chat.vue')
   }
+  
 ]
 
 const router = new VueRouter({
   routes
+})
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn) {
+      next()
+      return
+    }
+    next('/')
+  } else {
+    next()
+  }
 })
 
 export default router
