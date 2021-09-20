@@ -59,6 +59,11 @@ const routes = [
     component: () => import( '../views/Teams.vue')
   },
   {
+    path: '/tasks',
+    name: 'Tasks',
+    component: () => import( '../views/Tasks.vue')
+  },
+  {
     path: '/archives',
     name: 'Archives',
     component: () => import( '../views/Archives.vue')
@@ -69,8 +74,6 @@ const routes = [
     component: () => import( '../views/Tasks.vue')
   },
   {
-    // let routeData = this.$router.resolve({name: 'routeName', query: {data: "someData"}});
-// window.open(routeData.href, '_blank');
     path: '/chat',
     name: 'Chat',
     component: () => import( '../views/Chat.vue')

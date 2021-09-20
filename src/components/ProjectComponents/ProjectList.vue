@@ -66,13 +66,14 @@
           <v-col>
               <v-btn
                color="error"
-              @click="dialog = false"
+              @click="pauseProject(project.id)"
               >Pause  </v-btn>
           </v-col>
           <v-spacer></v-spacer>
           <v-col>
               <v-btn
                color="success"
+               @click="doneProject(project.id)"
               >Done</v-btn>
           </v-col>
           <v-spacer></v-spacer>
@@ -88,7 +89,7 @@
              <v-btn
              text
                color="primary"
-              @click="dialog = false"
+              to="Tasks"
               >view</v-btn>
           </v-col>
       </v-row>
@@ -136,6 +137,50 @@ export default {
     generator() {
       this.mycolor = "#" + ((Math.random() * 0xffffff) << 0).toString(16);
       return this.mycolor;
+    },
+        async doneProject(id) {
+      try {
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.$store.state.token,
+        };
+        console.log(headers);
+        let baseURI = "http://localhost:8000/api/projects/"+id+"/done";
+        await axios.put(
+          baseURI,
+          {},
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + this.$store.state.token, //the token is a variable which holds the token
+            },
+          }
+        );
+      } catch (e) {
+        console.log(e.response);
+      }
+    },
+       async pauseProject(id) {
+      try {
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.$store.state.token,
+        };
+        console.log(headers);
+        let baseURI = "http://localhost:8000/api/projects/"+id+"/pause";
+        await axios.put(
+          baseURI,
+          {},
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + this.$store.state.token, //the token is a variable which holds the token
+            },
+          }
+        );
+      } catch (e) {
+        console.log(e.response);
+      }
     },
   },
   mounted() {

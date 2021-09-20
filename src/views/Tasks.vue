@@ -1,20 +1,20 @@
 <template>
-
-<div class="pt-4 ml-5 mb-5">
+<div class="pt-4 ml-5 mb-0">
+    <Info/>
     <p class="mt-n0">
       <v-row no-gutters id="__todo__container">
-        <v-col cols="12" sm="4">
-          <v-card outlined tile>
-            <v-toolbar class="primary" height="30" dark>
+     <v-col cols="12" sm="3">
+          <v-card outlined class="rounded-xl ma-1 " color="#E5E5E5">
+            <v-toolbar height="30" color="transparent" elevation="0">
               <span class="caption">
-                <span>({{getState(1).length}})</span> To do
+                <span>({{getState(1).length}})</span> Request
               </span>
               <v-spacer></v-spacer>
               <!-- menu to add a new todo -->
               <v-menu
-                v-model="menuAddNewTodo"
+                v-model="menuAddNewRequest"
                 :close-on-content-click="false"
-                :nudge-width="200"
+                :nudge-width="300"
                 offset-x
               >
                 <template v-slot:activator="{ on, attrs }">
@@ -23,26 +23,121 @@
                   </v-btn>
                 </template>
 
-                <v-card>
-                  <v-container>
-                    <v-textarea
-                      v-model="todoToAdd"
-                      outlined
-                      hint="Please enter yout todo"
-                      name="input-7-4"
-                      label="Add Todo"
-                      placeholder="Enter a note"
-                    ></v-textarea>
-                  </v-container>
-                  <v-divider></v-divider>
+                 <v-card class="mx-auto my-12" max-width="500">
+          <v-card-title>
+            Make A Request
+          </v-card-title>
+          <v-divider></v-divider>
 
-                  <v-card-actions>
+          <form class="pa-10">
+            <p>Title</p>
+            <v-text-field
+              v-model="title"
+              required
+              outlined
+              clearable
+              color="#A544B9"
+              @input="$v.title.$touch()"
+              @blur="$v.title.$touch()"
+            ></v-text-field>
+            <p>Description</p>
+            <v-text-field
+              v-model="description"
+              required
+              color="#A544B9"
+              outlined
+              clearable
+              @input="$v.description.$touch()"
+              @blur="$v.description.$touch()"
+            ></v-text-field>
+
+            <v-row>
+              <v-col>
+                <v-dialog
+                  ref="dialog"
+                  v-model="modal"
+                  :return-value.sync="date1"
+                  persistent
+                  width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      label="Start Date"
+                      prepend-icon="mdi-calendar"
+                       v-model="start_date"
+                      color="green"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    v-model="start_date"
+                    scrollable
+                    color="#A544B9"
+                  >
                     <v-spacer></v-spacer>
-
-                    <v-btn text @click="menuAddNewTodo = false">Cancel</v-btn>
-                    <v-btn color="primary" text @click="createTodo">add</v-btn>
-                  </v-card-actions>
-                </v-card>
+                    <v-btn text color="#A544B9" @click="modal = false">
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      text
+                      color="#A544B9"
+                      @click="$refs.dialog.save(start_date)"
+                    >
+                      OK
+                    </v-btn>
+                  </v-date-picker>
+                </v-dialog>
+              </v-col>
+              <v-col>
+                <v-dialog
+                  ref="dialog2"
+                  v-model="modal2"
+                  :return-value.sync="date2"
+                  persistent
+                  width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      label="End Date"
+                      prepend-icon="mdi-calendar"
+                      color="red"
+                       v-model="end_date"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker v-model="end_date" scrollable color="#A544B9">
+                    <v-spacer></v-spacer>
+                    <v-btn text color="#A544B9" @click="modal2 = false">
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      text
+                      color="#A544B9"
+                      @click="$refs.dialog2.save(end_date)"
+                    >
+                      OK
+                    </v-btn>
+                  </v-date-picker>
+                </v-dialog>
+              </v-col>
+            </v-row>
+            <v-row align="space-between">
+              <v-col>
+                <v-btn text color="#A544B9" @click="menuAddNewOrder = false">
+                  Cancel
+                </v-btn>
+              </v-col>
+              <v-spacer></v-spacer>
+              <v-col>
+                <v-btn color="#A544B9" @click="newOrder()">Let's do it</v-btn>
+              </v-col>
+            </v-row>
+          </form>
+        </v-card>
               </v-menu>
               <!-- end of menu to add a new todo-->
             </v-toolbar>
@@ -72,9 +167,173 @@
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="12" sm="4">
-          <v-card outlined tile>
-            <v-toolbar class="primary" height="30" dark>
+        <v-col cols="12" sm="3">
+          <v-card outlined class="rounded-xl ma-1" color="#E5E5E5" >
+            <v-toolbar height="30" color="transparent" elevation="0">
+              <span class="caption">
+                <span>({{getState(1).length}})</span> To do
+              </span>
+              <v-spacer></v-spacer>
+              <!-- menu to add a new todo -->
+              <v-menu
+                v-model="menuAddNewTodo"
+                :close-on-content-click="false"
+                :nudge-width="200"
+                offset-x
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn v-bind="attrs" v-on="on" class="mr-n4" small plain fab elevation="0">
+                    <v-icon small>mdi-plus</v-icon>
+                  </v-btn>
+                </template>
+
+               <v-card class="mx-auto my-12" max-width="500">
+          <v-card-title>
+            Add Todo
+          </v-card-title>
+          <v-divider></v-divider>
+
+          <form class="pa-10">
+            <p>Title</p>
+            <v-text-field
+              v-model="title"
+              required
+              outlined
+              clearable
+              color="#A544B9"
+              @input="$v.title.$touch()"
+              @blur="$v.title.$touch()"
+            ></v-text-field>
+            <p>Description</p>
+            <v-text-field
+              v-model="description"
+              required
+              color="#A544B9"
+              outlined
+              clearable
+              @input="$v.description.$touch()"
+              @blur="$v.description.$touch()"
+            ></v-text-field>
+
+            <v-row>
+              <v-col>
+                <v-dialog
+                  ref="dialog"
+                  v-model="modal"
+                  :return-value.sync="date1"
+                  persistent
+                  width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      label="Start Date"
+                      prepend-icon="mdi-calendar"
+                       v-model="start_date"
+                      color="green"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    v-model="start_date"
+                    scrollable
+                    color="#A544B9"
+                  >
+                    <v-spacer></v-spacer>
+                    <v-btn text color="#A544B9" @click="modal = false">
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      text
+                      color="#A544B9"
+                      @click="$refs.dialog.save(start_date)"
+                    >
+                      OK
+                    </v-btn>
+                  </v-date-picker>
+                </v-dialog>
+              </v-col>
+              <v-col>
+                <v-dialog
+                  ref="dialog2"
+                  v-model="modal2"
+                  :return-value.sync="date2"
+                  persistent
+                  width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      label="End Date"
+                      prepend-icon="mdi-calendar"
+                      color="red"
+                       v-model="end_date"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker v-model="end_date" scrollable color="#A544B9">
+                    <v-spacer></v-spacer>
+                    <v-btn text color="#A544B9" @click="modal2 = false">
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      text
+                      color="#A544B9"
+                      @click="$refs.dialog2.save(end_date)"
+                    >
+                      OK
+                    </v-btn>
+                  </v-date-picker>
+                </v-dialog>
+              </v-col>
+            </v-row>
+            <v-row align="space-between">
+              <v-col>
+                <v-btn text color="#A544B9" @click="menuAddNewOrder = false">
+                  Cancel
+                </v-btn>
+              </v-col>
+              <v-spacer></v-spacer>
+              <v-col>
+                <v-btn color="#A544B9" @click="newOrder()">Let's do it</v-btn>
+              </v-col>
+            </v-row>
+          </form>
+        </v-card>
+              </v-menu>
+              <!-- end of menu to add a new todo-->
+            </v-toolbar>
+            <v-card-text
+              @drop="onDrop($event, 1)"
+              @dragover.prevent
+              @dragenter.prevent
+              class="pa-2 __tasks"
+            >
+              <!-- list of todos -->
+              <div
+                draggable="true"
+                @dragstart="startDrag($event, todo)"
+                v-for="todo in getState(1)"
+                :key="todo.id"
+                class="__element"
+              >
+                <TaskComponent
+                  :todoObject="todo"
+                  iconColor="red"
+                  mdiIcon="mdi-alert-circle-outline"
+                  @deleteTodoFromChild="deleteTodo"
+                  @editTodoFromChild="editTodo"
+                />
+              </div>
+              <!-- / list of todos -->
+            </v-card-text>
+          </v-card>
+        </v-col>
+        <v-col cols="12" sm="3">
+          <v-card outlined class="rounded-xl ma-1" color="#E5E5E5">
+            <v-toolbar class="transparent" elevation="0" height="30">
               <span class="caption">({{getState(2).length}}) In Progress</span>
               <v-spacer></v-spacer>
             </v-toolbar>
@@ -103,9 +362,9 @@
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="12" sm="4">
-          <v-card outlined tile>
-            <v-toolbar class="primary" height="30" dark>
+        <v-col cols="12" sm="3">
+          <v-card outlined class="rounded-xl ma-1" color="#E5E5E5">
+            <v-toolbar class="transparent" height="30" elevation="0">
               <span class="caption">({{getState(3).length}})Done</span>
               <v-spacer></v-spacer>
             </v-toolbar>
@@ -143,14 +402,18 @@
 <script>
 
 import TaskComponent from "@/components/Task";
+
+import Info from '@/components/Info.vue'
 export default {
   components: {
     TaskComponent,
+    Info
   },
   data() {
     return {
       todoToAdd: "", // the todo to be added
       menuAddNewTodo: false, // for the adding of a new todo
+      menuAddNewRequest: false, // for the adding of a new todo
       todos: [
         {
           id: 1,

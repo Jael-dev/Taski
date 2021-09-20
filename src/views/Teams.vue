@@ -1,11 +1,10 @@
 <template>
-
-<div class="pt-4 ml-5 mb-5">
+<div class="pt-4 ml-5 mb-0">
     <Info/>
     <p class="mt-n0">
       <v-row no-gutters id="__todo__container">
      <v-col cols="12" sm="3">
-          <v-card outlined class="rounded-xl" color="grey" >
+          <v-card outlined class="rounded-xl ma-1 " color="#E5E5E5">
             <v-toolbar height="30" color="transparent" elevation="0">
               <span class="caption">
                 <span>({{getState(1).length}})</span> Request
@@ -169,7 +168,7 @@
           </v-card>
         </v-col>
         <v-col cols="12" sm="3">
-          <v-card outlined class="rounded-xl" color="grey" >
+          <v-card outlined class="rounded-xl ma-1" color="#E5E5E5" >
             <v-toolbar height="30" color="transparent" elevation="0">
               <span class="caption">
                 <span>({{getState(1).length}})</span> To do
@@ -333,7 +332,7 @@
           </v-card>
         </v-col>
         <v-col cols="12" sm="3">
-          <v-card outlined class="rounded-xl" color="grey">
+          <v-card outlined class="rounded-xl ma-1" color="#E5E5E5">
             <v-toolbar class="transparent" elevation="0" height="30">
               <span class="caption">({{getState(2).length}}) In Progress</span>
               <v-spacer></v-spacer>
@@ -364,7 +363,7 @@
           </v-card>
         </v-col>
         <v-col cols="12" sm="3">
-          <v-card outlined class="rounded-xl" color="grey">
+          <v-card outlined class="rounded-xl ma-1" color="#E5E5E5">
             <v-toolbar class="transparent" height="30" elevation="0">
               <span class="caption">({{getState(3).length}})Done</span>
               <v-spacer></v-spacer>

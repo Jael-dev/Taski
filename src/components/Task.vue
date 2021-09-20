@@ -10,7 +10,7 @@
     >
       <v-app-bar flat color="rgba(0, 0, 0, 0)">
         <v-toolbar-title class="text-h5 black--text pl-0">
-          {{ todoObject.name }}
+          {{ todoObject.title }}
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-menu bottom left>
@@ -38,11 +38,11 @@
 
       <v-card-text class="black--text mt-0 pt-0 pl-10">
         <h5 class="pt-2 ml-0">
-           {{ todoObject.name }}
+           {{ todoObject.description }}
         </h5>
         <div class="caption">
           <a href="#">#</a>
-          last opend by {{ todoObject.createdBy }}
+          last opend by {{ userActions.user_id }}
         </div>
       </v-card-text>
 
@@ -160,17 +160,17 @@ export default {
     iconColor: String,
     mdiIcon: String,
     disableActionButtons: Boolean, // if we want action buttons enabled or not
+    userActions:WebGLVertexArrayObject
   },
   data() {
     return {
       dialogEdit: false, // dialog for editing
       dialogDelete: false, // dialog to confirm deletion
       dialogInfo: false, // dialog display info
-      todoToUpdate: this.todoObject.name,
+      todoToUpdate: this.todoObject.title,
       user: "",
       user_id: "",
       dialog: false,
-      orders: "",
       modal: false,
       modal2: false,
       menuAddNewTask: false,
@@ -193,7 +193,7 @@ export default {
     // emit onEditTodo to the parent component
     onEditTodo() {
       this.dialogEdit = false;
-      this.todoObject.name = this.todoToUpdate; // updating the name of todo in todoObject with the new one
+      this.todoObject.title = this.todoToUpdate; // updating the name of todo in todoObject with the new one
       console.log("onEditTodo from chield component");
       this.$emit("editTodoFromChild", this.todoObject); //emiting to the parent which todo to be edited
     },

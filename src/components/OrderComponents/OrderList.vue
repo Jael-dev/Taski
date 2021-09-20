@@ -29,7 +29,7 @@
           </v-card-title>
           <v-divider></v-divider>
 
-          <form class="pa-10">
+          <form class="pa-5">
             <p>Title</p>
             <v-text-field
               v-model="title"
@@ -64,7 +64,7 @@
                     <v-text-field
                       label="Start Date"
                       prepend-icon="mdi-calendar"
-                       v-model="start_date"
+                      v-model="start_date"
                       color="green"
                       readonly
                       v-bind="attrs"
@@ -103,7 +103,7 @@
                       label="End Date"
                       prepend-icon="mdi-calendar"
                       color="red"
-                       v-model="end_date"
+                      v-model="end_date"
                       readonly
                       v-bind="attrs"
                       v-on="on"
@@ -133,7 +133,9 @@
               </v-col>
               <v-spacer></v-spacer>
               <v-col>
-                <v-btn color="#A544B9" @click="newOrder()">Let's do it</v-btn>
+                <v-btn class="white--text" color="#A544B9" @click="newOrder()"
+                  >Let's do it</v-btn
+                >
               </v-col>
             </v-row>
           </form>
@@ -242,11 +244,13 @@
               <v-row align="space-between">
                 <v-spacer></v-spacer>
                 <v-col>
-                  <v-btn color="error" @click="dialog = false">Deny </v-btn>
+                  <v-btn color="error" @click="denyOrder(order.id)"
+                    >Deny
+                  </v-btn>
                 </v-col>
                 <v-spacer></v-spacer>
                 <v-col>
-                  <v-btn color="success">Accept</v-btn>
+                  <v-btn color="success" @click="acceptOrder(order.id)">Accept</v-btn>
                 </v-col>
                 <v-spacer></v-spacer>
                 <v-col>
@@ -281,8 +285,8 @@ export default {
       start_date: "",
       end_date: "",
       validation_date: "",
-      date2:"",
-      date1:""
+      date2: "",
+      date1: "",
     };
   },
   methods: {
@@ -320,11 +324,55 @@ export default {
           user_id: this.user_id,
         };
 
-       await axios.post("http://localhost:8000/api/orders", order, {
+        await axios.post("http://localhost:8000/api/orders", order, {
           headers,
         });
       } catch (e) {
         console.log(e);
+      }
+    },
+    async denyOrder(id) {
+      try {
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.$store.state.token,
+        };
+        console.log(headers);
+        let baseURI = "http://localhost:8000/api/orders/destroy/" + id;
+        await axios.put(
+          baseURI,
+          {},
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + this.$store.state.token, //the token is a variable which holds the token
+            },
+          }
+        );
+      } catch (e) {
+        console.log(e.response);
+      }
+    },
+       async acceptOrder(id) {
+      try {
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.$store.state.token,
+        };
+        console.log(headers);
+        let baseURI = "http://localhost:8000/api/projects/" + id;
+        await axios.post(
+          baseURI,
+          {},
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + this.$store.state.token, //the token is a variable which holds the token
+            },
+          }
+        );
+      } catch (e) {
+        console.log(e.response);
       }
     },
   },
