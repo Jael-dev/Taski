@@ -42,7 +42,7 @@
         </h5>
         <div class="caption">
           <a href="#">#</a>
-          last opend by {{ userActions.user_id }}
+          <!-- last opend by {{ userActions.user_id }} -->
         </div>
       </v-card-text>
 
@@ -182,6 +182,10 @@ export default {
       date2: "",
       date1: "",
     };
+  },
+  created(){
+    console.log(this.todoObject)
+
   },
   methods: {
     // emit onDeleteTodo to the parent component

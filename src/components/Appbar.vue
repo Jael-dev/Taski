@@ -12,7 +12,7 @@
       v-if="isLoggedIn"
     >
 
-      <v-toolbar-title>{{this.$router.history.current.path}}</v-toolbar-title>
+      <v-toolbar-title>{{routeName}}</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -124,6 +124,7 @@ export default({
       hover: false,
       drawer: true,
       mini: false,
+      routeName:"",
       items: [
         {
           id:1,
@@ -197,6 +198,13 @@ export default({
           this.$router.push('/login')
         })
       }
+  },
+  watch:{
+    '$route'(to,from){
+      this.routeName=this.$route.name
+
+    }
+
   },
   mounted(){
    this.user = JSON.parse(localStorage.getItem("user"));

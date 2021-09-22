@@ -59,8 +59,9 @@ const routes = [
     component: () => import( '../views/Teams.vue')
   },
   {
-    path: '/tasks',
+    path: '/tasks/:projectId',
     name: 'Tasks',
+    props: true ,
     component: () => import( '../views/Tasks.vue')
   },
   {
@@ -82,6 +83,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  mode:"history",
   routes
 })
 router.beforeEach((to, from, next) => {
