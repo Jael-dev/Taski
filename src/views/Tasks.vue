@@ -1,11 +1,8 @@
 <template>
   <div class="pt-4 ml-5 mb-0">
     <Info />
-    <p class="mt-n0" >
-      <v-row
-        no-gutters
-        id="__todo__container"
-      >
+    <p class="mt-n0">
+      <v-row no-gutters id="__todo__container">
         <v-col cols="12" sm="3">
           <v-card outlined class="rounded-xl ma-1 " color="#E5E5E5">
             <v-toolbar height="30" color="transparent" elevation="0">
@@ -33,7 +30,7 @@
                     <v-icon small>mdi-plus</v-icon>
                   </v-btn>
                 </template>
-<!-- 
+                <!-- 
                 <v-card class="mx-auto my-12" max-width="500">
                   <v-card-title>
                     Make A Request
@@ -491,46 +488,79 @@ export default {
       event.dataTransfer.setData("todoId", todo.id); //setting the todoId which is carried to be used later on
     },
     // ondrop function that handles the dropping of the element
-    onDrop(event, state) {
+    async onDrop(event, state) {
       console.log("Droped to state =>" + state);
       const todoId = event.dataTransfer.getData("todoId"); // getting the todoId which was carried
       const item = this.todos.find((item) => item.id == todoId); // compare to one of our todos in our array
       item.state = state; // update the state value to where it was dropped
-      console.log("Item moved =>" + JSON.stringify(item));
-      console.log(this.getState(1).length);
-      console.log(this.todos);
-    },
-    // function to create a new Todo
-    // function to deleteTodo
-    async deleteTodo(todoId) {
-      console.log("Todo id to be deleted => " + todoId);
-       try {
+      try {
+        console.log(
+          "http://localhost:8000/api/tasks/" +
+            this.projectId +
+            "/" +
+            todoId +
+            "/" +
+            state +
+            "/updateTask"
+        );
         const response = await axios.put(
-          "http://localhost:8000/api/tasks/"+todoId+"/dismiss",
+          "http://localhost:8000/api/tasks/" +
+            this.projectId +
+            "/" +
+            todoId +
+            "/" +
+            state +
+            "/updateTask",
+          {},
           {
             headers: {
               "Content-Type": "application/json",
               Authorization: "Bearer " + this.$store.state.token,
             },
-            
           }
         );
       } catch (e) {
-        console.log(e)
-    }
-       
+        console.log(e);
+      }
+    },
+    // function to create a new Todo
+    // function to deleteTodo
+    async deleteTodo(todoId) {
+      console.log("Todo id to be deleted => " + todoId);
+      try {
+        const response = await axios.put(
+          "http://localhost:8000/api/tasks/" + todoId + "/dismiss",
+          {},
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + this.$store.state.token,
+            },
+          }
+        );
+      } catch (e) {
+        console.log(e);
+      }
     },
     // editTodo function
-    editTodo(editTodoObject) {
+    async editTodo(editTodoObject) {
       console.log("Todo Object to be edit => ");
       console.log(editTodoObject);
-      // mapping to get the todo object to be deleted
-      this.todos.map((todo, index) => {
-        if (todo.id == editTodoObject.id) {
-          console.log(index);
-          todo = editTodoObject; // updating the todo with the new values gotten from the edit dialog
-        }
-      });
+      try {
+        console.log("http://localhost:8000/api/tasks/" + editTodoObject.id)
+        const response = await axios.put(
+          "http://localhost:8000/api/tasks/" + editTodoObject.id,
+          editTodoObject,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + this.$store.state.token,
+            },
+          }
+        );
+      } catch (e) {
+        console.log(e);
+      }
     },
     async get_todos() {
       try {
@@ -548,9 +578,9 @@ export default {
         console.log(e);
       }
     },
-     async create_todos() {
+    async create_todos() {
       try {
-          const task = {
+        const task = {
           title: this.title,
           description: this.description,
           state: 1,
@@ -559,7 +589,8 @@ export default {
           user_id: this.user_id,
         };
         const response = await axios.post(
-          "http://localhost:8000/api/tasks/" + this.projectId, task,
+          "http://localhost:8000/api/tasks/" + this.projectId,
+          task,
           {
             headers: {
               "Content-Type": "application/json",
