@@ -2,7 +2,7 @@
   <v-card class="rounded-xl" max-width="374" elevation="34">
     <v-card-text class="user">
       <v-sheet
-      class="user"
+        class="user"
         rounded="circle"
         color="#A544B9"
         elevation="2"
@@ -50,7 +50,7 @@
       </template>
 
       <v-card>
-        <v-list>
+        <v-card-title>
           <v-list-item>
             <v-list-item-avatar>
               <img
@@ -74,17 +74,25 @@
               </v-btn>
             </v-list-item-action>
           </v-list-item>
-        </v-list>
+        </v-card-title>
 
         <v-divider></v-divider>
-        <v-list v-for="privilege in privileges" :key="privilege.name">
+        <v-list v-for="privilege in privileges" :key="privilege.id">
           <v-list-item>
+            <v-card>
+          <v-toolbar>
+            <v-card-title>{{privilege.name}}</v-card-title>
+            <v-spacer></v-spacer>
             <v-list-item-action>
-              <v-switch
-                color="#A544B9"
-              ></v-switch>
-            </v-list-item-action>
-            <v-list-item-title>{{privilege.name}}</v-list-item-title>
+                <v-switch
+                  color="purple"
+                  value="True"
+                  inset
+                  flat
+                  @click="assignPerm(user.id,privilege.id)"
+                ></v-switch></v-list-item-action
+          ></v-toolbar>
+        </v-card>
           </v-list-item>
 
         </v-list>
@@ -117,14 +125,17 @@
 
 <script>
 export default {
+  props:['user'],
 data: () => ({
-  user:'',
       rating: 4,
         fav: true,
       menu: false,
       message: false,
       hints: true,
-      privileges:''
+      privileges:'',
+      userPrivileges:[],
+    currentUser: "",
+    user_id: "",
     }),
     methods:{
        async get_data() {
@@ -141,14 +152,39 @@ data: () => ({
 
         this.privileges = response["data"]["data"];
       } catch (e) {
-        this.errors.push(e);
+        console.log(e);
       }
     },
+    
+
+
+      async assignPerm($userId,$id){
+
+         try {
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.$store.state.token,
+        };
+        let permissionAssignment = "http://localhost:8000/api/permissions/"+$userId+"/"+$id ;
+        console.log(permissionAssignment)
+        await axios.put(
+          permissionAssignment,
+          {},
+          {
+            headers
+          }
+        )
+        console.log("permission"+$id+"assigned")
+      } catch (e) {
+        console.log(e);
+      }
+    }
     },
-     mounted(){
-   this.user = JSON.parse(localStorage.getItem("user"));
-   this.get_data()
-  }
+    mounted(){
+    this.currentUser = JSON.parse(localStorage.getItem("user"));
+    this.user_id = this.currentUser.id;
+      this.get_data()
+    }
 };
 </script>
 <style>

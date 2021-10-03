@@ -131,54 +131,56 @@ export default({
           title: "Dashboard",
           icon: "mdi-view-dashboard-outline",
           to: "/dashboard",
+          target:""
         },
         { 
           id:2,
           title: "Orders", 
           icon: "mdi-reorder-horizontal", 
-          to: "/orders" 
+          to: "/orders",
+          target:"" 
         },
         {
           id:3,
           title: "Projects",
           icon: "mdi-folder-multiple-outline",
           to: "/projects",
+          target:""
         },
         {
           id:4,
           title: "Reports",
           icon: "mdi-chart-bell-curve-cumulative",
           to: "/reports",
+          target:""
         },
         { 
           id:5,
           title: "Teams", 
           icon: "mdi-account-group-outline", 
-          to: "/teams" 
+          to: "/teams" ,
+          target:""
         },
         { 
           id:6,
-          title: "Chat", 
-          icon: "mdi-forum-outline", 
-          to: "/chat",
+          title: "Archives", 
+          icon: "mdi-folder-zip-outline", 
+          to: "/archives",
+          target:"" 
         },
         { 
           id:7,
-          title: "Archives", 
-          icon: "mdi-folder-zip-outline", 
-          to: "/archives" 
-        },
-        { 
-          id:8,
           title: "Users", 
           icon: "mdi-account-circle-outline", 
-          to: "/users" 
+          to: "/users" ,
+          target:""
         },
         { 
           id:9,
           title: "Settings", 
           icon: "mdi-cog-outline", 
-          to: "/settings" 
+          to: "/settings" ,
+          target:""
         },
       ],
     };

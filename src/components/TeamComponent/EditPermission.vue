@@ -49,6 +49,8 @@
 <script>
 
 export default({
+
+  props:['permissions']
    
 })
 </script>

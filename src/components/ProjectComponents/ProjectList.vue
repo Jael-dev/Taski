@@ -136,7 +136,7 @@ export default {
 
         this.projects = response["data"]["data"];
       } catch (e) {
-        this.errors.push(e);
+        console.log(e);
       }
     },
     generator() {
@@ -193,12 +193,6 @@ export default {
       this.detailsProjet.title=item.title
       this.detailsProjet.description=item.description
     }
-    // goToTask(id,e){
-    //     console.log(id)
-    //   e.stopPropagation();
-    //   this.$router.push('tasks/'+id)
-    //     console.log(id)
-    // }
   },
   mounted() {
     this.user = JSON.parse(localStorage.getItem("user"));

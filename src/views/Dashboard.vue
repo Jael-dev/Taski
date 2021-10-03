@@ -8,10 +8,8 @@
       </v-col>
      <v-col>
        <Calendar/>
-       <p>Trend</p>
-       <Chart/>
-       <Chart/>
-       <Chart/>
+       <Notification/>
+       <Chat/>
      </v-col>
    </v-row>
  </div>
@@ -22,7 +20,8 @@ import Project from '@/components/HomePage/Project.vue'
 import Projects from '@/components/HomePage/Projects.vue'
 import MyTasks from '@/components/HomePage/MyTasks.vue'
 import Calendar from '@/components/HomePage/Calendar.vue'
-import Chart from '@/components/ChartsComponent/D3SlicesChart.vue'
+import Notification from '@/components/HomePage/Notification.vue'
+import Chat from '@/components/HomePage/chat.vue'
 import Info from '@/components/Info.vue'
 export default ({
 
@@ -31,14 +30,10 @@ export default ({
     MyTasks,
     Calendar,
     Projects,
-    Chart,
-    Info
+    Notification,
+    Info,
+    Chat
   },
-  //  props: {
-  //   userId: id,
-  //   userToken: token 
-  // },
-
 })
 </script>
 

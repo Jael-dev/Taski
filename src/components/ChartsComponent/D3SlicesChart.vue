@@ -1,63 +1,65 @@
 <template>
-  <div class="ma-3">
-    <v-sparkline
-      :value="value"
-      :gradient="gradient"
-      :smooth="radius || false"
-      :padding="padding"
-      :line-width="width"
-      :stroke-linecap="lineCap"
-      :gradient-direction="gradientDirection"
-      :fill="fill"
-      :type="type"
-      :auto-line-width="autoLineWidth"
-      auto-draw
-    ></v-sparkline>
+  <div class="my-app">
+    
+    <!-- chart -->
+    <D3BarChart
+      :config="chart_config"
+      :datum="chart_data"
+      :title="chart_title"
+      :source="chart_source"
+    ></D3BarChart>
+
+    <!-- value control -->
+    <select v-model="config.values">
+      <option :value="[d]" v-for="d in ['hours', 'production']"  :key="d.year">{{d}}</option>
+    </select>
+
+    <!-- current control -->
+    <select v-model="config.currentKey">
+      <option :value="d.year" v-for="d in data"  :key="d.year">{{d.year}}</option>
+    </select>
+
+    <!-- title control -->
+    <input type="text" v-model="chart_title">
+
+    <!-- source control -->
+    <input type="text" v-model="chart_source">
+
   </div>
 </template>
 
 <script>
-const gradients = [
-  ["#222"],
-  ["#42b3f4"],
-  ["red", "orange", "yellow"],
-  ["purple", "violet"],
-  ["#00c6ff", "#F0F", "#FF0"],
-  ["#f72047", "#ffd200", "#1feaea"],
-];
+import { D3BarChart } from 'vue-d3-charts';
+
 export default {
-  data: () => ({
-    width: 2,
-    radius: 10,
-    padding: 8,
-    lineCap: "round",
-    gradient: gradients[5],
-    gradientDirection: "top",
-    gradients,
-     value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
-    fill: false,
-    type: "trend",
-    autoLineWidth: false,
-  }),
-  methods: {
-    // async getValues() {
-    //   await axios
-    //     .get("http://localhost:8000/api/orders", {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: "Bearer " + this.$store.state.token,
-    //       },
-    //     })
-    //     .then((response) => {
-    //       console.log(response);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     })
-    //     .finally(() => {
-    //       console.log("done");
-    //     });
-    // },
+  components: {
+    D3BarChart,
   },
-};
+  data() {
+    return {
+      config:"",
+      data:"",
+      source:"",
+      chart_title: 'Your title goes here',
+      chart_source: 'Your source goes here',
+      chart_data: [
+        {hours: 1648, production: 9613, year: '2007'},
+        {hours: 2479, production: 6315, year: '2008'},
+        {hours: 3200, production: 2541, year: '2009'}
+      ],
+      chart_config: {
+        key: 'year',
+        currentKey: '2004',
+        values: ['hours'],
+        axis: {
+          yTicks: 3
+        },
+        color: {
+          default: '#222f3e',
+          current: '#41B882'
+        }
+      }
+    }
+  }
+}
 </script>

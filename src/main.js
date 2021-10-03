@@ -5,7 +5,16 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import axios from 'axios'
 import moment from 'moment'
+// import Echo from 'laravel-echo';
 
+// window.Pusher = require('pusher-js');
+
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: '39ebcbda7c8ebae490a9',
+//     cluster: 'eu',
+//     forceTLS: true
+// });
 
 Vue.config.productionTip = false
 window.axios = axios

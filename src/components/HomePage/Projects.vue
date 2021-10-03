@@ -3,7 +3,7 @@
     <v-card max-width="374" class="rounded-xl mt-3 project">
       <v-toolbar elevation="0">
         <v-spacer></v-spacer>
-        <p> Projects ({{ projects.length }}) </p>
+        <p>Projects ({{ projects.length }})</p>
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-divider></v-divider>
@@ -11,30 +11,28 @@
         <v-list flat>
           <v-list-item @click="get_time(project.id)">
             <template>
-              <v-list-text-field>
-                <v-alert class="ma-0"
+              <v-list-item class="ma-0">
+                <v-alert
+                  class="ma-0"
                   color="white"
                   :class="{
                     green: get_time(project.id) > 10,
                     orange: get_time(project.id) === 5,
                     red: get_time(project.id) < 5,
+                    grey: get_time(project.id) < 0,
                   }"
                   dark
                   icon="mdi-timer"
                   border="left"
                   prominent
                 >
-                <v-row class="ml-1 mt-2">
-                  <v-list-item-title>{{ project.title }}</v-list-item-title>
+                  <v-row class="ml-1 mt-2">
+                    <v-list-item-title>{{ project.title }}</v-list-item-title>
 
-                 <p>{{ get_time(project.id) }} Days Remaining</p></v-row>
-                 
-                 
+                    <p>{{ get_time(project.id) }} Days Remaining</p></v-row
+                  >
                 </v-alert>
-              </v-list-text-field>
-                
-
-           
+              </v-list-item>
             </template>
           </v-list-item>
         </v-list>
@@ -81,7 +79,7 @@ export default {
     async get_data() {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/AdminProjects",
+          "http://localhost:8000/api/orderproj",
           {
             headers: {
               "Content-Type": "application/json",

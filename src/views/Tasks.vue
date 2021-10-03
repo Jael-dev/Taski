@@ -473,7 +473,7 @@ export default {
   methods: {
     // function that returns the matching alements of a particular list
     getState(x) {
-      return this.todos.filter((item) => item.state === x); // return the matching state which must be open
+      return Object.values(this.todos).filter((item) => item.state === x); // return the matching state which must be open
     },
     // remove item for chip filter
     remove(item) {
@@ -547,7 +547,7 @@ export default {
       console.log("Todo Object to be edit => ");
       console.log(editTodoObject);
       try {
-        console.log("http://localhost:8000/api/tasks/" + editTodoObject.id)
+        console.log("http://localhost:8000/api/tasks/" + editTodoObject.id);
         const response = await axios.put(
           "http://localhost:8000/api/tasks/" + editTodoObject.id,
           editTodoObject,

@@ -17,18 +17,18 @@
 
               <v-list-item-content>
                 <v-list-item-title
-                  :class="{ 'text-decoration-line-through': task.state === 1,
+                  :class="{ 'text-decoration-line-through': task.state === 3,
                   'text--secondary':task.state === 2,
-                  'text--disabled':task.state === 3  }"
+                  'text--disabled':task.state === 1  }"
                   >{{ task.title }}</v-list-item-title
                 >
               </v-list-item-content>
               <v-list-item-action>
                 <v-btn  
                 :class="{
-                      green: task.state === 1,
+                      green: task.state === 3,
                       orange: task.state === 2,
-                      red: task.state === 3,
+                      red: task.state === 1,
                     }"
                     icon>
                   <v-icon
